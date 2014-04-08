@@ -1,0 +1,56 @@
+/* CSS DOCUMENT */
+
+/* This will contain all of our specifics info like defining how buttons or divs look..
+   if they aren't going to be forms IDK if I'll keep it that way or not we'll see......*/
+
+.jumbotron {
+  position: relative;
+  width:100%;
+  max-width: 1000px;
+  height: auto;
+  min-height: 120px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  padding: 5px;
+  line-height: 1.428571429;
+  font-size: 18px;
+  color: #555;
+  background-image: none;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 9px 0px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0px 0px 9px 0px rgba(50, 50, 50, 1);
+    box-shadow:         0px 0px 9px 0px rgba(50, 50, 50, 1);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  color: inherit;
+  background-color: lightgrey;
+}
+
+.jumbotron2 {
+  position: relative;
+  width:100%;
+  max-width: 1000px;
+  height: auto;
+  min-height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  padding: 5px;
+  line-height: 1.428571429;
+  font-size: 18px;
+  color: #555;
+  background-image: none;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 9px 0px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0px 0px 9px 0px rgba(50, 50, 50, 1);
+    box-shadow:         0px 0px 9px 0px rgba(50, 50, 50, 1);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  color: inherit;
+  background-color: lightgrey;
+}
+
+#login-bg {
+  background-image:url('images/Lion_Facepalm.jpg');
+}
