@@ -91,9 +91,12 @@ border:1px solid black;
 		<div class="AuthorDiv2" style="float: left; left:2px; bottom: 10px">
 
 			<form style="position:relative; left:30%; bottom: -10px;" name="input" action="" method="get">
-				Review Title: <input type="text" name="user">
+				Rating: 1 <input type="radio"> 2<input type="radio"> 3<input type="radio"> 4<input type="radio"> 5<input type="radio">
 			</form>
-			<textarea rows="30" cols="72"></textarea>
+			Review to Author: </br>
+			<textarea rows="15" cols="72">Insert shit you say to the fucking Author here</textarea></br>
+			Comment to Editor: </br>
+			<textarea rows="15" cols="72">Here's where you spew shit onto a text feild to the dickhead Editor</textarea></br>
 			<form style="position:relative; bottom: -10px; text-align:center" name="input" action="">
 				<input type="submit" value="Submit Review">
 			</form>

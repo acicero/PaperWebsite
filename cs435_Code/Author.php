@@ -38,8 +38,6 @@ border:1px solid black;
 					<td width="10%">Selected</td>					
 				<?php $result = mysqli_query($con,"SELECT * FROM `Paper` WHERE `userid` = 12345");
 				      $counter = 0;
-					
-
 					while($row = mysqli_fetch_array($result)){ ?>
 					  <tr>						
   						<td><?php echo $row['title']; ?></td>

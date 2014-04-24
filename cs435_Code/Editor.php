@@ -94,6 +94,9 @@ border:1px solid black;
 					  </tr>
 					<?php } ?>
 			</table>
+			<form style=" float: left; position:relative; bottom: -10px; text-align:center" name="input" action="">
+				<input type="submit" value="Accept/Reject">
+			</form>
 		</div>
 		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">
 			<table class="table" style="float: left; position:relative; width:100%">
@@ -137,7 +140,7 @@ border:1px solid black;
 				</tr>
 			</table>
 			<form style="float: left; position:relative; bottom: -10px; left: 33%" name="input" action="">
-				<input type="submit" value="Submit Review">
+				<input type="submit" value="Assign Reviewers">
 			</form>
 		</div>
 	</div>
