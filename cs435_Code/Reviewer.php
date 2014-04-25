@@ -18,6 +18,7 @@ $paper_selected_review = 0;
 $paper_selected_comments = 0;
 if (isset($_POST['download'])) {
     $paper_selected_download = $_POST['papers'];
+    //include_file "afdsfadsfadsafdsdfasfdsa.php";//I assume you can use this to call and download a paper.
     unset($_POST['download']);    
   }
 if (isset($_POST['Review'])) {

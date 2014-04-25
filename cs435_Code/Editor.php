@@ -7,12 +7,29 @@ $profpic = "images/sign-up-btn.gif";
 $con=mysqli_connect("localhost","root","","Paper_Website");
 
 // Check connection
-
 if (mysqli_connect_errno())
   {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
+
+$paper_selected_comments = 0;
+$paper_selected_download = 0;
+$paper_selected_author = 0;
+if (isset($_POST['comments'])) {
+    $paper_selected_comments = $_POST['papers'];
+    unset($_POST['comments']);    
+  }
+if (isset($_POST['download'])) {
+    $paper_selected_download = $_POST['papers'];
+    //include_file "afdsfadsfadsafdsdfasfdsa.php";//I assume you can use this to call and download a paper.
+    unset($_POST['download']);    
+  }
+if (isset($_POST['reviewers'])) {
+    $paper_selected_author = $_POST['papers'];
+    unset($_POST['reviwers']);    
+  }
 ?>
+
 <head>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
@@ -27,22 +44,25 @@ border:1px solid black;
 <body>
 	<div class = "AuthorDiv" style="float: left;">
 		<div class = "EditorDiv2" style="float: left; bottom: 10px">
+			<form action="" method="post">
 			<table class="tablesmall" style="float: left; position:relative; width:100%;">
 				<th COLSPAN="5">
 					<h3><br>All Papers</h3>
 				</th>
 				<tr>
-					<td width="45%">Title</td>
+					<td width="30%">Title</td>
+					<td width="15%">Author</td>
 					<td width="15%">Date Submitted</td>
 					<td width="15%">Reviewers Assigned</td>
 					<td width="15%">Status Assigned</td>
 					<td width="10%">Selected</td>
 
-				<?php  $result = mysqli_query($con,"SELECT * FROM `Paper`");
+				<?php  $result = mysqli_query($con,"SELECT * FROM `Paper`,`User` WHERE `Paper`.`userid` = `User`.`userid`");
 
 				        while($row = mysqli_fetch_array($result)){ ?>
 					  <tr>
 					    <td><?php echo $row['title'];?></td>
+					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>
 					    <td><?php echo $row['date'];?></td>
 					    <td><?php switch ($row['reviewers_assigned1']){
 								case 0:
@@ -62,18 +82,17 @@ border:1px solid black;
 								  echo "pending";
 								} ?></td>
 						<td>
-						<form style="font-size:20px; position:relative; left: 13px; top: 8px;">
-							<input type="radio"><br>
-							</form>
+							<input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_author == $row['paperid'])){echo "checked";}?> name="papers" value=<?php echo $row['paperid']; ?>><br>							
 						</td>
 					  </tr>
-					<?php } ?>
-				
+					<?php } ?>				
 			
-			</table>
-			<form style=" float: left; position:relative; bottom: -10px; text-align:center" name="input" action="">
-				<input type="submit" value="Download">
+			</table>			
+				<input type="submit" value="Download" name='download'>
+				<input type="submit" value="View Comments" name='comments'>
+				<input type="submit" value="Assign Reviewers" name='reviewers'>
 			</form>
+			<form action="" method="post">
 			<table class="tablesmall" style="float: left; position:relative; width:100%">
 				<tr>
 					<th COLSPAN="3"><h3>Reviewer Comments</h3>
@@ -85,7 +104,7 @@ border:1px solid black;
 					<th width="70%">Comment</th>
 				</tr>
 				<tr ALIGN="CENTER">
-				<?php $review = mysqli_query($con,"SELECT * FROM `User`,`Reviews` WHERE `User`.`userid` = `Reviews`.`userid` and `Reviews`.`paperid` = 11111"); 
+				<?php $review = mysqli_query($con,"SELECT * FROM `User`,`Reviews` WHERE `User`.`userid` = `Reviews`.`userid` and `Reviews`.`paperid` = " . $paper_selected_comments); 
 				        while($row = mysqli_fetch_array($review)){?>
 					  <tr>
 					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>
@@ -93,9 +112,8 @@ border:1px solid black;
 					    <td><?php echo $row['comment'];?></td>
 					  </tr>
 					<?php } ?>
-			</table>
-			<form style=" float: left; position:relative; bottom: -10px; text-align:center" name="input" action="">
-				<input type="submit" value="Accept/Reject">
+			</table>			
+				<input type="submit" value="Accept/Reject" name='status'>
 			</form>
 		</div>
 		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">
@@ -107,8 +125,13 @@ border:1px solid black;
 				<tr>
 					<th width="70%">Reviewer</th>
 					<td width="30%">Selected</td>
-				<?php  $result = mysqli_query($con,"SELECT * FROM `User` WHERE `permission` = 2 and `userid` != 12346");
-
+				<?php  
+					$result = mysqli_query($con, "SELECT `userid` FROM `Paper` WHERE `paperid` = " . $paper_selected_author);
+					$author_userid = 0;
+					while($row = mysqli_fetch_array($result)){
+						$author_userid = $row['userid'];
+					}
+					$result = mysqli_query($con,"SELECT * FROM `User` WHERE `permission` = 2 and `userid` != " . $author_userid);
 				        while($row = mysqli_fetch_array($result)){ ?>
 					  <tr ALIGN="CENTER">
 					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>					

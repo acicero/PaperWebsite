@@ -92,7 +92,6 @@ border:1px solid black;
 				</tr>
 				<?php 
 					if($paper_selected != 0){
-
 					$reviewers[] = array();
 					$count = 0;
 					$getReviewers = mysqli_query($con, "SELECT `paperid`,`reviewers_assigned1`,`reviewers_assigned2` FROM `Paper` WHERE `paperid` = " . $paper_selected);
@@ -100,7 +99,7 @@ border:1px solid black;
 						$reviewers[0] = $row['reviewers_assigned1'];
 						$reviewers[1] = $row['reviewers_assigned2'];
 					}				
-					$review = mysqli_query($con,"SELECT * FROM `Reviews`,`User` WHERE `Reviews`.`written_to` = 12345 and `Reviews`.`paperid` = ". $paper_selected ." and ((`Reviews`.`userid` = " . $reviewers[0] . " and `User`.`userid` = " . $reviewers[0] . ") or (`Reviews`.`userid` = " . $reviewers[1] . " and `User`.`userid` = " . 								       $reviewers[1] . "))");   
+					$review = mysqli_query($con,"SELECT * FROM `Reviews`,`User` WHERE `Reviews`.`written_to` = 12345 and `Reviews`.`paperid` = ". $paper_selected ." and ((`Reviews`.`userid` = " . $reviewers[0] . " and `User`.`userid` = " . $reviewers[0] . ") or (`Reviews`.`userid` = " . $reviewers[1] . " and `User`.`userid` = " . 								       $reviewers[1] . "))");  //Still need to add the userid to this query.
 				        while($row = mysqli_fetch_array($review)){?>
 					  <tr>
 					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>
