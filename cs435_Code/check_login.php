@@ -1,7 +1,7 @@
 <?php
 
-//session_start();
-//ob_start();
+session_start();
+ob_start();
 
 $con=mysqli_connect("localhost","root","","Paper_Website");
 if (mysqli_connect_errno())
@@ -17,23 +17,20 @@ $myusername = mysql_real_escape_string($myusername);
 
 
 $result = mysqli_query($con,"SELECT * FROM `User` WHERE `email` = '$myusername'");
-if(($test = mysql_num_rows($result)) == 0)
-{
-	header('Location: index.php'); //failed attempt to login username not found
-		
-}
-
-$userdata = mysql_fetch_array($result);
-if($userdata['password'] != $mypassword) 
-{
-	header('Location: index.php');	
-} else {
-	session_regenerate_id();
-	$_SESSION['session_user_id'] = $userdata['userid']; 
-	$_SESSION['session_user_name'] = $userdata['email']; 
-	$permission = $userdata['permission'];
-	switch($permission)
-	{
+while($row = mysqli_fetch_array($result)){
+	if(is_null($row['userid'])){
+	  header('Location: index.php'); //failed attempt to login username not found		
+	}
+        if($row['password'] != $mypassword){
+	  header('Location: index.php');	
+	}
+	else{
+	  session_regenerate_id();
+	  $_SESSION['session_user_id'] = $row['userid']; 
+	  $_SESSION['session_user_name'] = $row['email']; 
+	  $permission = $row['permission'];
+	  switch($permission)
+	  {
 		case 0:
 			header('Location: Editor.php');
 			break;
@@ -43,7 +40,7 @@ if($userdata['password'] != $mypassword)
 		case 2:
 			header('Location: Reviewer.php');
 			break;
-	}
+	  }
+        }
 }
-
 ?>
