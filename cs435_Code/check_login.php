@@ -1,7 +1,7 @@
 <?php
 
-session_start();
-ob_start();
+//session_start();
+//ob_start();
 
 $con=mysqli_connect("localhost","root","","Paper_Website");
 if (mysqli_connect_errno())
@@ -13,20 +13,20 @@ $mypassword = $_POST['mypassword'];
 
 $myusername = stripslashes($myusername);
 $myusername = mysql_real_escape_string($myusername);
-$mypassword = hash('md5', $mypassword);
+//$mypassword = hash('md5', $mypassword);
 
-$query = "SELECT * FROM 'User' WHERE 'email' = '$myusername';";
 
-$result = mysqli_query($con,$query);
-if(mysql_num_rows($result) == 0)
+$result = mysqli_query($con,"SELECT * FROM `User` WHERE `email` = '$myusername'");
+if(($test = mysql_num_rows($result)) == 0)
 {
 	header('Location: index.php'); //failed attempt to login username not found
+		
 }
 
 $userdata = mysql_fetch_array($result);
 if($userdata['password'] != $mypassword) 
 {
-	header('Location: index.php');
+	header('Location: index.php');	
 } else {
 	session_regenerate_id();
 	$_SESSION['session_user_id'] = $userdata['userid']; 
