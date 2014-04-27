@@ -16,7 +16,7 @@ $myusername = mysql_real_escape_string($myusername);
 $mypassword = hash('md5', $mypassword);
 
 
-$result = mysqli_query($con,"SELECT * FROM 'User' WHERE 'email' = $myusername");
+$result = mysqli_query($con,"SELECT * FROM 'User' WHERE 'email' = '$myusername';");
 if(mysql_num_rows($result) == 0)
 {
 	header('Location: index.php'); //failed attempt to login username not found
