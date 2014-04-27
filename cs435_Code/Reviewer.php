@@ -1,13 +1,12 @@
 <?php
 $profpic = "images/sign-up-btn.gif";
+session_start();
 ?>
 <?php
 // Create connection
-
 $con=mysqli_connect("localhost","root","","Paper_Website");
 
 // Check connection
-
 if (mysqli_connect_errno())
   {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -55,13 +54,13 @@ border:1px solid black;
 					<td width="60%">Title</td>
 					<td width="15%">Date</td>					
 					<td width="10%">Selected</td>
-				<?php  $result = mysqli_query($con,"SELECT * FROM (SELECT * FROM `Paper` WHERE `Paper`.`paperid` NOT IN(SELECT `paperid` FROM `Reviews`)) tab WHERE ".							      "((tab.`reviewers_assigned1` = 12346) or(tab.`reviewers_assigned2` = 12346))");//this needs the usersession id
+				<?php  $result = mysqli_query($con,"SELECT * FROM (SELECT * FROM `Paper` WHERE `Paper`.`paperid` NOT IN(SELECT `paperid` FROM `Reviews`)) tab WHERE ".				                              "((tab.`reviewers_assigned1` = " . $_SESSION['session_user_id'] . ") or(tab.`reviewers_assigned2` = " . $_SESSION['session_user_id'] . "))");
 				while($row = mysqli_fetch_array($result)){ ?>
 					  <tr>
 					    <td><?php echo $row['title'];?></td>
 					    <td><?php echo $row['date'];?></td>
 					    <td>						
-							<input type="radio" name="papers" value=<?php echo $row['paperid']; ?>><br>							
+							<input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_review == $row['paperid'])){echo "checked";}?> name="papers" value=<?php echo $row['paperid']; ?>><br>							
 						</td>
 					  </tr>
 					<?php } ?>
@@ -81,7 +80,7 @@ border:1px solid black;
 					<td width="15%">Status</td>
 					<td width="10%">Selected</td>
 				<?php  
-					$result2 = mysqli_query($con,"SELECT * FROM `Reviews`,`Paper` WHERE `Reviews`.`userid` = 12346 and `Reviews`.`paperid` = `Paper`.`paperid` and "								."((`Paper`.`reviewers_assigned1` = 12346) or(`Paper`.`reviewers_assigned2` = 12346))");//this also needs the usersession id
+					$result2 = mysqli_query($con,"SELECT * FROM `Reviews`,`Paper` WHERE `Reviews`.`userid` = 12346 and `Reviews`.`paperid` = `Paper`.`paperid` and "								."((`Paper`.`reviewers_assigned1` = " . $_SESSION['session_user_id'] . ") or(`Paper`.`reviewers_assigned2` = " . $_SESSION['session_user_id'] . "))");
 
 					while($row = mysqli_fetch_array($result2)){ ?>
 					  <tr>
@@ -98,7 +97,7 @@ border:1px solid black;
 								  echo "pending";
 								} ?> </td>
 					    <td>						
-						<input type="radio" name="papers" value=<?php echo $row['paperid']; ?>><br>							
+						<input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_review == $row['paperid'])){echo "checked";}?> name="papers" value=<?php echo $row['paperid']; ?>><br>							
 					    </td>
 					  </tr>
 					<?php } ?>			
@@ -108,7 +107,7 @@ border:1px solid black;
 		</div>
 		<?php  
 			
-			$result2 = mysqli_query($con,"SELECT * FROM `Reviews` WHERE `Reviews`.`userid` = 12346 and `Reviews`.`paperid` = " . $paper_selected_comments);//this also needs the usersession id
+			$result2 = mysqli_query($con,"SELECT * FROM `Reviews` WHERE `Reviews`.`userid` = " . $_SESSION['session_user_id'] . " and `Reviews`.`paperid` = " . $paper_selected_comments);
 			$review_row = mysqli_fetch_array($result2); ?>
 		<form name="input" action="" method="get"><!-- Dis where for sends to php file-->
 			<div class="AuthorDiv2" style="float: left; left:2px; bottom: 10px">			

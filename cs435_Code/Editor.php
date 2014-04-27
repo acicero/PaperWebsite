@@ -1,5 +1,6 @@
 <?php
 $profpic = "images/sign-up-btn.gif";
+session_start();
 ?>
 <?php
 // Create connection
@@ -32,6 +33,7 @@ if (isset($_POST['reviewers'])) {
 
 <head>
 <link href="style.css" rel="stylesheet" type="text/css" />
+<script src="jquery-1.11.0.js"></script>
 </head>
 
 <style>
@@ -46,7 +48,7 @@ border:1px solid black;
 		<div class = "EditorDiv2" style="float: left; bottom: 10px">
 			<form action="" method="post">
 			<table class="tablesmall" style="float: left; position:relative; width:100%;">
-				<th COLSPAN="5">
+				<th COLSPAN="6">
 					<h3><br>All Papers</h3>
 				</th>
 				<tr>
@@ -117,6 +119,7 @@ border:1px solid black;
 			</form>
 		</div>
 		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">
+			<form action="" name="Reviewer_Column">
 			<table class="table" style="float: left; position:relative; width:100%">
 				<tr>
 					<th COLSPAN="3"><h3>Reviewers</h3>
@@ -135,22 +138,18 @@ border:1px solid black;
 				        while($row = mysqli_fetch_array($result)){ ?>
 					  <tr ALIGN="CENTER">
 					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>					
-						<td>
-						<form style="font-size:20px; position:relative; left: 13px; top: 8px;">
-							<input type="radio"><br>
-							</form>
+						<td>						
+						  <input type="radio" name="reviewer" value=""><br>							
 						</td>
 					  </tr>
 					<?php } ?>
 				
 			</table>
-		</div>
-		<form style="float: left; position:relative; bottom: -250px; left: 15px; text-align:center" name="input" action="">
-				<input type="submit" value=">">
-		</form>
-		<form style="float: left; position:relative; bottom: -280px; right: 13px; text-align:center" name="input" action="">
-				<input type="submit" value="<">
-		</form>
+			</form>
+		</div>		
+			<input style="float: left; position:relative; bottom: -250px; left: 15px; text-align:center" type="button" value=">" id="forward">		
+			<input style="float: left; position:relative; bottom: -280px; right: 13px; text-align:center" type="submit" value="<" id="backward">
+		
 		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">
 			<table class="table" style="float: left; position:relative; width:100%">
 				<tr>
@@ -166,5 +165,5 @@ border:1px solid black;
 				<input type="submit" value="Assign Reviewers">
 			</form>
 		</div>
-	</div>
+	</div>	
 </body>

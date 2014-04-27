@@ -2,8 +2,9 @@
 $profpic = "images/sign-up-btn.gif";
 ?> -->
 <?php
-// Create connection
+session_start();
 
+// Create connection
 $con=mysqli_connect("localhost","root","","Paper_Website");
 // Check connection
 if (mysqli_connect_errno())
@@ -40,7 +41,7 @@ border:1px solid black;
 						<td width="15%">Date</td>
 						<td width="15%">Status</td>
 						<td width="10%">Selected</td>					
-					<?php $result = mysqli_query($con,"SELECT * FROM `Paper` WHERE `userid` = 12345");
+					<?php $result = mysqli_query($con,"SELECT * FROM `Paper` WHERE `userid` = " . $_SESSION['session_user_id']);
 					      while($row = mysqli_fetch_array($result)){ ?>
 						  <tr>						
   							<td><?php echo $row['title']; ?></td>
@@ -56,7 +57,7 @@ border:1px solid black;
 									  echo "pending";
 									} ?> </td>
 							<td>							
-								<input name= "papers" value= <?php echo $row['paperid']; ?> type="radio"><br>						
+								<input name= "papers" value= <?php echo $row['paperid']; ?> type="radio"<?php if(($row['paperid'] == $paper_selected)){echo "checked";}?>><br>						
 							</td>
 						  </tr>
  						 <?php 									
@@ -99,7 +100,7 @@ border:1px solid black;
 						$reviewers[0] = $row['reviewers_assigned1'];
 						$reviewers[1] = $row['reviewers_assigned2'];
 					}				
-					$review = mysqli_query($con,"SELECT * FROM `Reviews`,`User` WHERE `Reviews`.`written_to` = 12345 and `Reviews`.`paperid` = ". $paper_selected ." and ((`Reviews`.`userid` = " . $reviewers[0] . " and `User`.`userid` = " . $reviewers[0] . ") or (`Reviews`.`userid` = " . $reviewers[1] . " and `User`.`userid` = " . 								       $reviewers[1] . "))");  //Still need to add the userid to this query.
+					$review = mysqli_query($con,"SELECT * FROM `Reviews`,`User` WHERE `Reviews`.`written_to` = " . $_SESSION['session_user_id'] . " and `Reviews`.`paperid` = ". $paper_selected ." and ((`Reviews`.`userid` = " . $reviewers[0] . " and `User`.`userid` = " . $reviewers[0] . ") or (`Reviews`.`userid` = " . $reviewers[1] . " and `User`.`userid` = " . 								       $reviewers[1] . "))");
 				        while($row = mysqli_fetch_array($review)){?>
 					  <tr>
 					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>
