@@ -34,6 +34,27 @@ if (isset($_POST['reviewers'])) {
 <head>
 <link href="style.css" rel="stylesheet" type="text/css" />
 <script src="jquery-1.11.0.js"></script>
+<script type="text/javascript"> 
+$().ready(function() {
+
+ $('#add').click(function() {  
+  if($('#reviewers_to_assign option').size() != 2){
+    !$('#reviewers_select option:selected').remove().appendTo('#reviewers_to_assign');
+    return $("#reviewers_to_assign option:selected").prop("selected", false);
+  } 
+ });
+
+ $('#remove').click(function() {
+  return !$('#reviewers_to_assign option:selected').remove().appendTo('#reviewers_select');
+ });
+
+ $('#confirm_reviewers').click(function() {
+   $('#reviewers_to_assign option').prop('selected', true);
+  });
+
+});
+
+</script>
 </head>
 
 <style>
@@ -118,16 +139,9 @@ border:1px solid black;
 				<input type="submit" value="Accept/Reject" name='status'>
 			</form>
 		</div>
-		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">
-			<form action="" name="Reviewer_Column">
-			<table class="table" style="float: left; position:relative; width:100%">
-				<tr>
-					<th COLSPAN="3"><h3>Reviewers</h3>
-					</th>
-				</tr>
-				<tr>
-					<th width="70%">Reviewer</th>
-					<td width="30%">Selected</td>
+		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">		
+				<label class="table" style="float: left; position:relative; width:100%">Reviewers</label>
+				<select multiple id="reviewers_select" class="table" size=15 style="float: left; position:relative; width:100%">				
 				<?php  
 					$result = mysqli_query($con, "SELECT `userid` FROM `Paper` WHERE `paperid` = " . $paper_selected_author);
 					$author_userid = 0;
@@ -135,34 +149,20 @@ border:1px solid black;
 						$author_userid = $row['userid'];
 					}
 					$result = mysqli_query($con,"SELECT * FROM `User` WHERE `permission` = 2 and `userid` != " . $author_userid);
-				        while($row = mysqli_fetch_array($result)){ ?>
-					  <tr ALIGN="CENTER">
-					    <td><?php echo $row['fname'] . " " . $row['lname'];?></td>					
-						<td>						
-						  <input type="radio" name="reviewer" value=""><br>							
-						</td>
-					  </tr>
+				        while($row = mysqli_fetch_array($result)){ ?>					  
+					    <option value=<?php echo $row['userid']; ?>><?php echo $row['fname'] . " " . $row['lname'];?></option>					
 					<?php } ?>
-				
-			</table>
-			</form>
+				</select>						
 		</div>		
-			<input style="float: left; position:relative; bottom: -250px; left: 15px; text-align:center" type="button" value=">" id="forward">		
-			<input style="float: left; position:relative; bottom: -280px; right: 13px; text-align:center" type="submit" value="<" id="backward">
+			<input style="float: left; position:relative; bottom: -250px; left: 15px; text-align:center" type="button" value=">" id="add">		
+			<input style="float: left; position:relative; bottom: -280px; right: 13px; text-align:center" type="submit" value="<" id="remove">
 		
-		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">
-			<table class="table" style="float: left; position:relative; width:100%">
-				<tr>
-					<th COLSPAN="3"><h3>Reviewer to Assign</h3>
-					</th>
-				</tr>
-				<tr>
-					<th width="70%">Reviewer</th>					
-					<td width="30%">Selected</td>
-				</tr>
-			</table>
-			<form style="float: left; position:relative; bottom: -10px; left: 33%" name="input" action="">
-				<input type="submit" value="Assign Reviewers">
+		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">		
+			<form name="input" action="" method="get" name="selected_reviewers"> <!-- this is where the reviewers submission php file goes -->
+			  <label class="table" style="float: left; position:relative; width:100%">Reviewers to Assign</label>
+			  <select multiple name="reviewers_to_assign[]" id='reviewers_to_assign' class="table" size=15 style="float: left; position:relative; width:100%">	
+			  </select>			
+		          <input type="submit" id='confirm_reviewers' value="Confirm Reviewers">
 			</form>
 		</div>
 	</div>	
