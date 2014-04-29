@@ -22,6 +22,7 @@ if (isset($_POST['download'])) {
   }
 if (isset($_POST['Review'])) {
     $paper_selected_review = $_POST['papers'];
+    $_SESSION['paper_selected_review'] = $_POST['papers'];
     unset($_POST['Review']);    
   }
 if (isset($_POST['comments'])) {
@@ -66,8 +67,8 @@ border:1px solid black;
 					<?php } ?>
 				
 			</table>
-				<input type="submit" value="Download">
-				<input type="submit" value="Review">
+				<input type="submit" value="Download" name = 'Download'>
+				<input type="submit" value="Review" name = 'Review'>
 			</form>	
 			<form action="" method="post">			
 			<table class="tablesmall" style="position:relative; width:100%; bottom: -10px">
@@ -109,13 +110,13 @@ border:1px solid black;
 			
 			$result2 = mysqli_query($con,"SELECT * FROM `Reviews` WHERE `Reviews`.`userid` = " . $_SESSION['session_user_id'] . " and `Reviews`.`paperid` = " . $paper_selected_comments);
 			$review_row = mysqli_fetch_array($result2); ?>
-		<form name="input" action="" method="get"><!-- Dis where for sends to php file-->
+		<form name="input" action="Submit_Review.php" method="get"><!-- Dis where for sends to php file-->
 			<div class="AuthorDiv2" style="float: left; left:2px; bottom: 10px">			
 				Rating: 1 <input type="radio"<?php if($review_row['rating'] == 1){echo "checked";}?> name="rating"> 2<input type="radio"<?php if($review_row['rating'] == 2){echo "checked";}?>  name="rating"> 3<input type="radio"<?php if($review_row['rating'] == 3){echo "checked";}?>  name="rating"> 4<input type="radio"<?php if($review_row['rating'] == 4){echo "checked";}?>  name="rating"> 5<input type="radio"<?php if($review_row['rating'] == 5){echo "checked";}?>  name="rating">			
 				Review to Author: </br>
-				<textarea rows="15" cols="72"><?php echo $review_row['review'];?></textarea></br>
+				<textarea rows="15" cols="72" name='review'><?php echo $review_row['review'];?></textarea></br>
 				Comment to Editor: </br>
-				<textarea rows="15" cols="72"><?php echo $review_row['comment'];?></textarea></br>			
+				<textarea rows="15" cols="72" name='comment'><?php echo $review_row['comment'];?></textarea></br>			
 				<input type="submit" value="Submit Review">			
 			</div>
 		</form>

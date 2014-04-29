@@ -117,7 +117,7 @@ border:1px solid black;
 				<input type="submit" value="View Comments" name='comments'>
 				<input type="submit" value="Assign Reviewers" name='reviewers'>
 			</form>
-			<form action="Update_Status.php" method="get">
+			<form action="" method="post">
 			<table class="tablesmall" style="float: left; position:relative; width:100%">
 				<tr>
 					<th COLSPAN="3"><h3>Reviewer Comments</h3>
@@ -137,10 +137,8 @@ border:1px solid black;
 					    <td><?php echo $row['comment'];?></td>
 					  </tr>
 					<?php } ?>
-			</table>	
-                                <label>Accept Paper </label><input type="radio" value="1" name='decision'>
-                                <label> Reject Paper </label><input type="radio" value="2" name='decision'>		
-				<input type="submit" value="Confirm" name='status'>
+			</table>			
+				<input type="submit" value="Accept/Reject" name='status'>
 			</form>
 		</div>
 		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">		
@@ -162,7 +160,7 @@ border:1px solid black;
 			<input style="float: left; position:relative; bottom: -280px; right: 13px; text-align:center" type="submit" value="<" id="remove">
 		
 		<div class="EditorDiv" style="float: left; left:2px; bottom: 10px">		
-			<form name="input" action="Assign_Reviewers.php" method="get" name="selected_reviewers"> <!-- this is where the reviewers submission php file goes -->
+			<form name="input" action="Assign_Reviwers.php" method="get" name="selected_reviewers"> 
 			  <label class="table" style="float: left; position:relative; width:100%">Reviewers to Assign</label>
 			  <select multiple name="reviewers_to_assign[]" id='reviewers_to_assign' class="table" size=15 style="float: left; position:relative; width:100%">	
 			  </select>			

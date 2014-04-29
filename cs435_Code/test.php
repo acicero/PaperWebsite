@@ -11,9 +11,11 @@ else{
     echo "success asshole";
     echo "<br>";
   }
+date_default_timezone_set('GMT');
+$date = date("Y-m-d");
+echo $date;
+$result = mysqli_query($con,"UPDATE `Paper_Website`.`Reviews` SET `date_reviewed` = '$date' WHERE `Reviews`.`reviewid` = 54322;"); 
 
-foreach ($_GET['reviewers_to_assign'] as $selectedOption)
-    echo $selectedOption."\n";
 //$paper_selected = 0;
 //if (isset($_POST['view_comments'])) {
     //$paper_selected = $_POST['papers'];
