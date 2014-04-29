@@ -1,7 +1,7 @@
 <?php
 $profpic = "images/sign-up-btn.gif";
 session_start();
-if(!isset($_SESSION['session_user_id'])){
+if(!isset($_SESSION['session_user_id']) || trim($_SESSION['session_user_id']) != ''){
 	header('location: index.php');
 }
 ?> 
