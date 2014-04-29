@@ -1,6 +1,9 @@
 <?php
 $profpic = "images/sign-up-btn.gif";
 session_start();
+if(!isset($_SESSION['session_user_id']) || !isset($_SESSION['permission']) || trim($_SESSION['permission']) != '0'){
+	header('location: index.php');
+}
 ?>
 <?php
 // Create connection

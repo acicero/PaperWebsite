@@ -12,7 +12,6 @@ $myusername = $_POST['myusername'];
 $mypassword = $_POST['mypassword'];
 
 $myusername = stripslashes($myusername);
-$myusername = mysql_real_escape_string($myusername);
 //$mypassword = hash('md5', $mypassword);
 
 
@@ -27,7 +26,8 @@ while($row = mysqli_fetch_array($result)){
 	else{
 	  session_regenerate_id();
 	  $_SESSION['session_user_id'] = $row['userid']; 
-	  $_SESSION['session_user_name'] = $row['email']; 
+	  $_SESSION['session_user_name'] = $row['email'];
+	  $_SESSION['permission'] = $row['permission'];
 	  $permission = $row['permission'];
 	  switch($permission)
 	  {
@@ -43,4 +43,5 @@ while($row = mysqli_fetch_array($result)){
 	  }
         }
 }
+
 ?>

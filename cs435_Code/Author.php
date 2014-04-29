@@ -1,8 +1,11 @@
 <!--<?php
 $profpic = "images/sign-up-btn.gif";
+session_start();
+if(!isset($_SESSION['session_user_id']) || !isset($_SESSION['permission']) || trim($_SESSION['permission']) != '1' || trim($_SESSION['permission']) != '2'){
+	header('location: index.php');
+}
 ?> -->
 <?php
-session_start();
 
 // Create connection
 $con=mysqli_connect("localhost","root","","Paper_Website");
