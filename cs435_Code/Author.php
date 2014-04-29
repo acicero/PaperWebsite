@@ -1,9 +1,9 @@
 <?php
 $profpic = "images/sign-up-btn.gif";
 session_start();
-//if(!(isset($_SESSION['session_user_id']) and isset($_SESSION['permission'])) or ($_SESSION['permission'] != 1 || $_SESSION['permission'] != 2)){
-//	header('location: index.php');
-//}
+if(!isset($_SESSION['session_user_id'])){
+	header('location: index.php');
+}
 ?> 
 <?php
 
