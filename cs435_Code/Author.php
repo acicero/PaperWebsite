@@ -1,7 +1,7 @@
 <?php
 $profpic = "images/sign-up-btn.gif";
 session_start();
-if(!isset($_SESSION['session_user_id']) || trim($_SESSION['session_user_id']) != ''){
+if(!isset($_SESSION['session_user_id']) /*|| trim($_SESSION['session_user_id']) != ''*/){
 	header('location: index.php');
 }
 ?> 
@@ -42,9 +42,11 @@ border:1px solid black;
 </style>
 
 <body>
-	<div class = "AuthorDiv" style="float: left;">
+	<div class = "AuthorDiv" style="float: left;bottom:-50px">
 		<input type="button" id="to_reviewer" value="To Reviewer Page" style="float: left; <?php if($_SESSION['permission'] == 1){echo "visibility:hidden;";}?>">
 		<input type="button" id="logout" value="Logout" style="float: right;">
+        </div>
+	<div class = "AuthorDiv" style="float: left;">		
 		<div class = "AuthorDiv2" style="float: left; bottom: 10px">
 			<form action="" method="post">
 				<table class="table" style="position:relative; width:100%;">

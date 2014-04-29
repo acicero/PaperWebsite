@@ -14,7 +14,7 @@ $profpic = "images/sign-up-btn.gif";
 				<label>Members Login:</label>
 				<input type="text" name="myusername" id="myusername" />
 				<input type="password" name="mypassword" id="mypassword" />
-				<input style="position:relative; TOP: 8px;" type="image" src="images/login-btn.jpg"
+				<input style="position:relative; TOP: 8px;" type="image" src="images/login-btn.gif"
 				       class="login-btn" alt="Login" title="Login" />
 			</form>
 			<form style="font-size:20px; position:relative; LEFT: 220px;" action="registration.php" method="post" name="Login" id="Login">

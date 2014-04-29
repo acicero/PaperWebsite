@@ -169,7 +169,7 @@ border:1px solid black;
 			  <label class="table" style="float: left; position:relative; width:100%">Reviewers to Assign</label>
 			  <select multiple name="reviewers_to_assign[]" id='reviewers_to_assign' class="table" size=15 style="float: left; position:relative; width:100%">	
 			  </select>			
-		          <input type="submit" id='confirm_reviewers' value="Confirm Reviewers">
+		          <input type="submit" id='confirm_reviewers' style="position: relative; left: 27%; bottom: -10px;"value="Confirm Reviewers">
 			</form>
 		</div>
 	</div>	
