@@ -20,4 +20,6 @@ $paperid = $_SESSION['paper_selected_review'];
 
 
 $result = mysqli_query($con,"INSERT INTO `Reviews`(`reviewid`, `rating`, `written_to`, `review`, `comment`, `userid`, `paperid`, `date_reviewed`) VALUES ('$review_id','$rating','$written_by','$review', '$comment','$userid','$paperid','$date')");
+
+header('Location: Reviewer.php');
 ?>

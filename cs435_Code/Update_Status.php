@@ -6,4 +6,5 @@ $result = mysqli_query($con, "UPDATE `Paper_Website`.`Paper` SET `status` = '$pa
 if($result == false){
 	//error
 }
+header('Location: Editor.php');
 ?>

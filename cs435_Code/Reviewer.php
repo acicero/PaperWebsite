@@ -112,7 +112,7 @@ border:1px solid black;
 			$review_row = mysqli_fetch_array($result2); ?>
 		<form name="input" action="Submit_Review.php" method="get"><!-- Dis where for sends to php file-->
 			<div class="AuthorDiv2" style="float: left; left:2px; bottom: 10px">			
-				Rating: 1 <input type="radio"<?php if($review_row['rating'] == 1){echo "checked";}?> name="rating"> 2<input type="radio"<?php if($review_row['rating'] == 2){echo "checked";}?>  name="rating"> 3<input type="radio"<?php if($review_row['rating'] == 3){echo "checked";}?>  name="rating"> 4<input type="radio"<?php if($review_row['rating'] == 4){echo "checked";}?>  name="rating"> 5<input type="radio"<?php if($review_row['rating'] == 5){echo "checked";}?>  name="rating">			
+				Rating: 1 <input type="radio"<?php if($review_row['rating'] == 1){echo "checked";}?> name="rating"> 2<input type="radio"<?php if($review_row['rating'] == 2){echo "checked";}?>  name="rating"> 3<input type="radio"<?php if($review_row['rating'] == 3){echo "checked";}?>  name="rating"> 4<input type="radio"<?php if($review_row['rating'] == 4){echo "checked";}?>  name="rating"> 5<input type="radio"<?php if($review_row['rating'] == 5){echo "checked";}?>  name="rating"></br>			
 				Review to Author: </br>
 				<textarea rows="15" cols="72" name='review'><?php echo $review_row['review'];?></textarea></br>
 				Comment to Editor: </br>
