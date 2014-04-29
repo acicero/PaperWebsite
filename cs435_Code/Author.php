@@ -1,10 +1,10 @@
-<!--<?php
+<?php
 $profpic = "images/sign-up-btn.gif";
 session_start();
-if(!isset($_SESSION['session_user_id']) || !isset($_SESSION['permission']) || trim($_SESSION['permission']) != '1' || trim($_SESSION['permission']) != '2'){
-	header('location: index.php');
-}
-?> -->
+//if(!(isset($_SESSION['session_user_id']) and isset($_SESSION['permission'])) or ($_SESSION['permission'] != 1 || $_SESSION['permission'] != 2)){
+//	header('location: index.php');
+//}
+?> 
 <?php
 
 // Create connection
@@ -22,8 +22,18 @@ if (isset($_POST['view_comments'])) {
 ?>
 <head>
 <link href="style.css" rel="stylesheet" type="text/css" />
+<script src="jquery-1.11.0.js"></script>
+<script type="text/javascript"> 
+$().ready(function() {
+ $('#to_reviewer').click(function() {  
+    window.location.href = "Reviewer.php";
+ });
+ $('#logout').click(function() {  
+    window.location.href = "logout.php";
+ });
+});
+</script>
 </head>
-
 <style>
 table,th,td
 {
@@ -33,6 +43,8 @@ border:1px solid black;
 
 <body>
 	<div class = "AuthorDiv" style="float: left;">
+		<input type="button" id="to_reviewer" value="To Reviewer Page" style="float: left; <?php if($_SESSION['permission'] == 1){echo "visibility:hidden;";}?>">
+		<input type="button" id="logout" value="Logout" style="float: right;">
 		<div class = "AuthorDiv2" style="float: left; bottom: 10px">
 			<form action="" method="post">
 				<table class="table" style="position:relative; width:100%;">
@@ -69,14 +81,10 @@ border:1px solid black;
 				<input type = 'submit' name = 'view_comments' value = "View Reviews">
 			</form>
 			<!-------------------------------------------------------------------------------->
-			<label style="position:relative; left:35%"> Submit a Paper Below </label>
-			<form style="position:relative; left:30%" name="input" action="" method="get">
-				Paper Title: <input type="text" name="user">
-			</form>
-			<form style="position:relative; left:30%" name="input" action="" method="get">
-				<input type="file" id="file">
-			</form>	
-			<form style="position:relative; left:42%" name="input" action="">
+			<form class="tablesmall" name="input" action="" method="get"><!--Paper insert.php-->
+			<label> Submit a Paper Below </label>		
+				Paper Title: <input style="float: center;" type="text" name="user"></br>			
+				<input style="position: center;" type="file" id="file"></br>			
 				<input type="submit" value="Submit">
 			</form>
 
