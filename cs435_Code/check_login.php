@@ -8,7 +8,7 @@ if (mysqli_connect_errno())
 {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
-$myusername = $_POST['myusername'];
+$myusername = strtolower($_POST['myusername']);
 $mypassword = $_POST['mypassword'];
 
 $myusername = stripslashes($myusername);
