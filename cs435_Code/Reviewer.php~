@@ -79,7 +79,7 @@
               <td width="60%">Title</td>
               <td width="15%">Date</td>					
               <td width="10%">Selected</td>
-              <?php  $result = mysqli_query($con,"SELECT * FROM (SELECT * FROM `Paper` WHERE `Paper`.`paperid` NOT IN(SELECT `Paper`.`paperid` FROM `Reviews`,`Paper` WHERE `Paper`.`paperid` = `Reviews`.`paperid` and `Reviews`.`userid` = ". $_SESSION['session_user_id'] . ")) tab WHERE "."((tab.`reviewers_assigned1` = " . $_SESSION['session_user_id'] . ") or (tab.`reviewers_assigned2` = " . $_SESSION['session_user_id'] . "))");
+              <?php  $result = mysqli_query($con,"SELECT * FROM (SELECT * FROM `Paper` WHERE `Paper`.`paperid` NOT IN(SELECT `paperid` FROM `Reviews` WHERE ((`reviewers_assigned1` != " . $_SESSION['session_user_id'] . ") or (`reviewers_assigned2` != " . $_SESSION['session_user_id'] . ")))) tab WHERE "."((tab.`reviewers_assigned1` = " . $_SESSION['session_user_id'] . ") or (tab.`reviewers_assigned2` = " . $_SESSION['session_user_id'] . "))");
                      while($row = mysqli_fetch_array($result)){ ?>
                        <tr>
                          <td><?php echo $row['title'];?></td>
