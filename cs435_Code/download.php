@@ -15,7 +15,7 @@ $result = mysqli_query($con, "SELECT * FROM `Paper` WHERE `paperid` = '$paperid'
 $row = mysqli_fetch_array($result);
 if(!is_null($row)){
 	
-	$file_name = $_SERVER['DOCUMENT_ROOT'] . '/website/PaperWebsite/papers/' . $row['paper_pdf'];
+	$file_name = $_SERVER['DOCUMENT_ROOT'] . '/website/PaperWebsite/papers/' . $row['paper_pdf']; //change the middle part to what it is on your computer 
 	if(file_exists($file_name)){
 
 		header('Content-Type: application/octet-stream');
