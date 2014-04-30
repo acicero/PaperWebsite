@@ -20,7 +20,7 @@
     $paper_selected_download = $_POST['awaiting_papers'];
     $_SESSION['paper_selected_download'] = $_POST['awaiting_papers'];
     header("location: download.php");
-    unset($_POST['download']);    
+    unset($_POST['Download']);    
   }
   if (isset($_POST['Review'])) {
     $paper_selected_review = $_POST['awaiting_papers'];

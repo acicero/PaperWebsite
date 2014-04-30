@@ -33,8 +33,9 @@ if (isset($_POST['comments'])) {
   }
 if (isset($_POST['download'])) {
     $paper_selected_download = $_POST['all_papers'];
-    //include_file "afdsfadsfadsafdsdfasfdsa.php";//I assume you can use this to call and download a paper.
-    unset($_POST['download']);    
+    $_SESSION['paper_selected_download'] = $_POST['all_papers'];
+    header("location: download.php");
+    unset($_POST['download']);       
   }
 if (isset($_POST['reviewers'])) {
     $paper_selected_author = $_POST['all_papers'];
