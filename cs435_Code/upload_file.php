@@ -7,23 +7,23 @@ if (mysqli_connect_errno())
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$temp = explode('.', $_FILES['file']['name']);
+//$temp = explode('.', $_FILES['file']['name']); need to do something with file
 
-$userid = _SESSION['session_user_id'];
+$userid = $_SESSION['session_user_id'];
 $title = $_GET['title'];
 
+date_default_timezone_set('GMT');
+$date = date("Y-m-d");
 $result = mysqli_query($con,"SELECT COUNT(`paperid`) FROM `Paper`");
 $row = mysqli_fetch_array($result);
 $paperid = 10000 + $row['COUNT(`paperid`)'];
 
 $paper_pdf = $title . $paperid;
 
-$result = mysqli_query($con,"INSERT INTO `User`(`userid`, `title`, `paperid`, `reviews_assigned_1`, `paper_pdf`, `satus`, `reviews_assigned_2`) VALUES ('$userid','$title','$paperid',`NULL`,'$paper_pdf',`NULL`)");
+$result = mysqli_query($con,"INSERT INTO `Paper`(`userid`, `title`, `paperid`, `reviewers_assigned1`, `paper_pdf`, `status`, `reviewers_assigned2`, `date`) VALUES ('$userid','$title','$paperid',NULL,'$paper_pdf', 0,NULL, '$date')");
 
 
 header('location: Author.php');
-
-
 
 
 ?>

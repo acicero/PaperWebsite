@@ -86,8 +86,8 @@ border:1px solid black;
 			<!-------------------------------------------------------------------------------->
 			<form class="tablesmall" name="input" action="upload_file.php" method="get" enctype="multipart/form-data"><!--Paper insert.php-->
 			<label> Submit a Paper Below </label>		
-				Paper Title: <input style="float: center;" type="text" name="title"></br>			
-				<input style="position: center;" type="file" id="file"></br>			
+				Paper Title: <input style="float: center;" type="text" name="title" id="title"></br>			
+				<input style="position: center;" type="file" name="file" id="file"></br>			
 				<input type="submit" value="Submit">
 			</form>
 
@@ -105,7 +105,7 @@ border:1px solid black;
 					<th width="10%">Rating</th>
 					<th width="70%">Comment</th>
 				</tr>
-				<?php
+				<?php 
 					if($paper_selected != 0){
 					$reviewers[] = array();
 					$count = 0;
