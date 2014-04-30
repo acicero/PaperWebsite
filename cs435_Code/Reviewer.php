@@ -16,18 +16,19 @@
   $paper_selected_download = 0;
   $paper_selected_review = 0;
   $paper_selected_comments = 0;
-  if (isset($_POST['download'])) {
-    $paper_selected_download = $_POST['papers'];
-    //include_file "afdsfadsfadsafdsdfasfdsa.php";//I assume you can use this to call and download a paper.
+  if (isset($_POST['Download'])) {
+    $paper_selected_download = $_POST['awaiting_papers'];
+    $_SESSION['paper_selected_download'] = $_POST['awaiting_papers'];
+    header("location: download.php");
     unset($_POST['download']);    
   }
   if (isset($_POST['Review'])) {
-    $paper_selected_review = $_POST['papers'];
-    $_SESSION['paper_selected_review'] = $_POST['papers'];
+    $paper_selected_review = $_POST['awaiting_papers'];
+    $_SESSION['paper_selected_review'] = $_POST['awaiting_papers'];
     unset($_POST['Review']);    
   }
   if (isset($_POST['comments'])) {
-    $paper_selected_comments = $_POST['papers'];
+    $paper_selected_comments = $_POST['completed_papers'];
     unset($_POST['comments']);  
   }
 ?>
@@ -43,6 +44,14 @@
   $('#logout').click(function() {  
     window.location.href = "logout.php";
    });
+  $("input[name='completed_papers']").click(function() {  
+    $('#comment').removeAttr("disabled");
+   });
+  $("input[name='awaiting_papers']").click(function() {  
+    $('#download').removeAttr("disabled");  
+    $('#review').removeAttr("disabled");  
+   });
+  
   });
   </script>
 </head>
@@ -56,6 +65,7 @@
 <body>	
   <div class = "AuthorDiv" style="float: left;bottom:-50px;">
     <input type="button" id="to_author" value="To Author Page" style="float: left;">
+    <label style="left: 27%;"> Reviewer Page </label>
     <input type="button" id="logout" value="Logout" style="float: right;">
   </div>
   <div class = "AuthorDiv" style="float: left;"> 
@@ -69,19 +79,19 @@
               <td width="60%">Title</td>
               <td width="15%">Date</td>					
               <td width="10%">Selected</td>
-              <?php  $result = mysqli_query($con,"SELECT * FROM (SELECT * FROM `Paper` WHERE `Paper`.`paperid` NOT IN(SELECT `paperid` FROM `Reviews`)) tab WHERE "."((tab.`reviewers_assigned1` = " . $_SESSION['session_user_id'] . ") or (tab.`reviewers_assigned2` = " . $_SESSION['session_user_id'] . "))");
+              <?php  $result = mysqli_query($con,"SELECT * FROM (SELECT * FROM `Paper` WHERE `Paper`.`paperid` NOT IN(SELECT `paperid` FROM `Reviews` WHERE ((`reviewers_assigned1` != " . $_SESSION['session_user_id'] . ") or (`reviewers_assigned2` != " . $_SESSION['session_user_id'] . ")))) tab WHERE "."((tab.`reviewers_assigned1` = " . $_SESSION['session_user_id'] . ") or (tab.`reviewers_assigned2` = " . $_SESSION['session_user_id'] . "))");
                      while($row = mysqli_fetch_array($result)){ ?>
                        <tr>
                          <td><?php echo $row['title'];?></td>
                          <td><?php echo $row['date'];?></td>
                          <td>						
-                           <input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_review == $row['paperid'])){echo "checked";}?> name="papers" value=<?php echo $row['paperid']; ?>><br>							
+                           <input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_review == $row['paperid']) or ($row['paperid'] == $paper_selected_download)){echo "checked";}?> name="awaiting_papers" id='awaiting_review' value=<?php echo $row['paperid']; ?>><br>							
                          </td>
                        </tr>
               <?php } ?>				
           </table>
-            <input type="submit" value="Download" name = 'Download'>
-            <input type="submit" value="Review" name = 'Review'>
+            <input type="submit"<?php if(($paper_selected_review == 0) and ($paper_selected_download == 0)){echo "Disabled";}?> value="Download" id='download' name = 'Download'>
+            <input type="submit"<?php if(($paper_selected_review == 0) and ($paper_selected_download == 0)){echo "Disabled";}?> value="Review" id='review' name = 'Review'>
         </form>	
         <form action="" method="post" class="tablesmall">			
           <table class="table" style="position:relative; width:100%;">
@@ -111,20 +121,20 @@
                             } ?> 
                   </td>
                   <td>						
-                    <input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_review == $row['paperid'])){echo "checked";}?> name="papers" value=<?php echo $row['paperid']; ?>><br>							
+                    <input type="radio"<?php if(($row['paperid'] == $paper_selected_comments) or ($paper_selected_review == $row['paperid'])){echo "checked";}?> name="completed_papers" id='completed_review' value=<?php echo $row['paperid']; ?>><br>							
                   </td>
                 </tr>
               <?php } ?>			
           </table>
-            <input type="submit" value="View Comment" style="" name='comments'>
+            <input type="submit"<?php if($paper_selected_comments == 0){echo "disabled";}?> value="View Comment" id='comment' style="" name='comments'>
         </form>
       </div>
       <?php  
         $result2 = mysqli_query($con,"SELECT * FROM `Reviews` WHERE `Reviews`.`userid` = " . $_SESSION['session_user_id'] . " and `Reviews`.`paperid` = " . $paper_selected_comments);
         $review_row = mysqli_fetch_array($result2); ?>
-      <form style="<?php if($paper_selected_review == 0){echo "visibility:hidden;";}?>"name="input" action="Submit_Review.php" method="get"><!-- Dis where for sends to php file-->
+      <form style ="<?php if($paper_selected_comments == 0 and $paper_selected_review == 0){echo "visibility:hidden;";}?>" name="input" action="Submit_Review.php" method="get"><!-- Dis where for sends to php file-->
         <div class="AuthorDiv2" style="float: left; left:2px; bottom: 10px">			
-          Rating: 1 <input type="radio"<?php if($review_row['rating'] == 1){echo "checked";}?> name="rating"> 2<input type="radio"<?php if($review_row['rating'] == 2){echo "checked";}?>  name="rating"> 3<input type="radio"<?php if($review_row['rating'] == 3){echo "checked";}?>  name="rating"> 4<input type="radio"<?php if($review_row['rating'] == 4){echo "checked";}?>  name="rating"> 5<input type="radio"<?php if($review_row['rating'] == 5){echo "checked";}?>  name="rating">
+          Rating: 1 <input type="radio"<?php if($review_row['rating'] == 1){echo "checked";}?> name="rating" value="1"> 2<input type="radio"<?php if($review_row['rating'] == 2){echo "checked";}?>  name="rating" value="2"> 3<input type="radio"<?php if($review_row['rating'] == 3){echo "checked";}?>  name="rating" value="3" > 4<input type="radio"<?php if($review_row['rating'] == 4){echo "checked";}?>  name="rating" value="4"> 5<input type="radio"<?php if($review_row['rating'] == 5){echo "checked";}?>  name="rating" value="5">
           </br>			
           Review to Author: </br>
           <textarea rows="15" cols="72" name='review'><?php echo $review_row['review'];?></textarea></br>

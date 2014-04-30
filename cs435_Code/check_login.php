@@ -40,6 +40,8 @@ while($row = mysqli_fetch_array($result)){
 		case 2:
 			header('Location: Reviewer.php');
 			break;
+		default:
+			header('Location: index.php');
 	  }
         }
 }

@@ -44,6 +44,7 @@ border:1px solid black;
 <body>
 	<div class = "AuthorDiv" style="float: left;bottom:-50px">
 		<input type="button" id="to_reviewer" value="To Reviewer Page" style="float: left; <?php if($_SESSION['permission'] == 1){echo "visibility:hidden;";}?>">
+		<label style="left: 27%;"> Author Page </label>
 		<input type="button" id="logout" value="Logout" style="float: right;">
         </div>
 	<div class = "AuthorDiv" style="float: left;">		

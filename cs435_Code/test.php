@@ -15,7 +15,7 @@ date_default_timezone_set('GMT');
 $date = date("Y-m-d");
 echo $date;
 $result = mysqli_query($con,"UPDATE `Paper_Website`.`Reviews` SET `date_reviewed` = '$date' WHERE `Reviews`.`reviewid` = 54322;"); 
-
+echo mysqli_num_rows(mysqli_query($con,"SELECT `reviewers_assigned1` FROM `Paper` WHERE `paperid` = 11111 or `paperid` = 0"));
 //$paper_selected = 0;
 //if (isset($_POST['view_comments'])) {
     //$paper_selected = $_POST['papers'];
